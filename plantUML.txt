@@ -1,0 +1,51 @@
+@startuml
+
+abstract class  "CuentaBancaria"{
+
+    # int idCuenta;    
+    # static int idsiguiente=1;
+    # float saldo;
+    # ArrayList<Cliente> titulares;
+    # float importeMantenimiento;
+    # float tasaInteres;
+    # boolean giroDescubierto;
+    # float limiteDescubierto;
+    # float tasaDescubierto;
+    + int getId;    
+    
+
+    + CuentaBancaria(Cliente e) 
+    + void agregarMasClientes(Cliente e)    
+    + boolean tengoEseCliente(Cliente c)     
+    + void agregarSaldo(float importe)
+    + float getSaldo() 
+	
+}
+
+class CAP{}
+class CAD{}
+class CCP{}
+class CCD{}
+
+CuentaBancaria <|-- CAP
+CuentaBancaria <|-- CAD
+CuentaBancaria <|-- CCP
+CuentaBancaria <|-- CCD
+
+ class Banco {
+	
+	- ArrayList<Cliente> clientes ;
+	- ArrayList <CuentaBancaria> cuentas;	
+	+ Banco()	
+	+ void agregarCliente(Cliente c)	
+	+ void verClientes()
+	+ Cliente soyEseCliente(int clienteID)	
+	+ void crearCuenta(int tipoCuenta,Cliente c){
+	+ void verCuentas()
+	+ CuentaBancaria soyLaCuenta(int id)
+	+ void agregarMasClientesCuenta(CuentaBancaria c, Cliente e) 
+	+ CuentaBancaria buscarCuentasCliente(Cliente c)
+	+ void consultarSaldo(Cliente c, CuentaBancaria e) 
+}
+
+@enduml
