@@ -1,51 +1,110 @@
 @startuml
+class Banco {
+	
+	- ArrayList<Cliente> clientes ;
+	- ArrayList <CuentaBancaria> cuentas;	
+	+ Banco()	
+	+ void agregarClienteConEnvio(Cliente c) 
+	+ void agregarClienteSinEnvio(Cliente c)
+	+ void verClientes() 
+	+ Cliente soyEseCliente(int clienteID)
+	+ void crearCuenta(int tipoCuenta,Cliente c
+	+ void verCuentas() 
+	+ CuentaBancaria soyLaCuenta(int id)
+	+ void agregarMasClientesCuenta(CuentaBancaria c, Cliente e)
+	+ CuentaBancaria buscarCuentasCliente(Cliente c)
+}
+class Movimiento {
+	
+	- CuentaBancaria cuentaBancaria;
+	- Cliente cliente;
+	- LocalDate fechaMovimiento;	
+	+ Movimiento()
+	+ void depositar(Cliente c, CuentaBancaria cb, double importe) 
+	+ void extraccion(Cliente c, CuentaBancaria cb, float importe) 
+	+ void consultarSaldo(Cliente c, CuentaBancaria e) 
+}
 
-abstract class  "CuentaBancaria"{
+class Cliente {
 
-    # int idCuenta;    
-    # static int idsiguiente=1;
-    # float saldo;
+    - String nombre;
+    - int idCliente;
+    - {static} int idSiguiente =100000;    
+    - String documento;
+    - String domicilio;
+    - String cp;
+    - boolean activo;     
+    
+	+ Cliente(String nombre, String documento, String domicilio) 
+	+ Cliente(String nombre, String documento, String domicilio, String cp) 
+	+ String toString() 
+	+ void desactivarCliente() 
+	+ boolean estaActivo()
+	+ int getIdCliente() 
+}
+
+
+abstract class CuentaBancaria {
+	
+
+    #  int idCuenta;    
+    # {static} int idsiguiente=100000;    
+    # String identificador;
+    # double saldo;
     # ArrayList<Cliente> titulares;
-    # float importeMantenimiento;
+    # double importeMantenimiento;
     # float tasaInteres;
     # boolean giroDescubierto;
     # float limiteDescubierto;
-    # float tasaDescubierto;
-    + int getId;    
+    # float tasaDescubierto;    
+    # LocalDate fechaActual ;
     
-
     + CuentaBancaria(Cliente e) 
-    + void agregarMasClientes(Cliente e)    
-    + boolean tengoEseCliente(Cliente c)     
-    + void agregarSaldo(float importe)
-    + float getSaldo() 
-	
+	+ String toString()
+	+ void agregarMasClientes(Cliente e)
+    + boolean tengoEseCliente(Cliente c) 
+    + void agregarSaldo(double importe)
+    {abstract} void quitarSaldo(float importe);
+	+ double getSaldo() 
+	+  String getID()
+	+ void aplicarMantenimientoCuenta()
+	+ void aplicarTasaInteres() 
 }
 
-class CAP{}
-class CAD{}
-class CCP{}
-class CCD{}
+
+class CAP  {
+
+	+ CAP(Cliente e)
+	+ void quitarSaldo(float importe) 
+}
+
+class CAD  {
+
+	+ CAD(Cliente e) 
+	+ void quitarSaldo(float importe) 
+}
+
+class CCP  {
+
+	+ CCP(Cliente e)
+	+ void quitarSaldo(float importe) 
+}
+
+class CCD  {
+
+	+ CCD(Cliente e) 
+	+ void quitarSaldo(float importe) 
+}
 
 CuentaBancaria <|-- CAP
 CuentaBancaria <|-- CAD
 CuentaBancaria <|-- CCP
 CuentaBancaria <|-- CCD
 
- class Banco {
-	
-	- ArrayList<Cliente> clientes ;
-	- ArrayList <CuentaBancaria> cuentas;	
-	+ Banco()	
-	+ void agregarCliente(Cliente c)	
-	+ void verClientes()
-	+ Cliente soyEseCliente(int clienteID)	
-	+ void crearCuenta(int tipoCuenta,Cliente c){
-	+ void verCuentas()
-	+ CuentaBancaria soyLaCuenta(int id)
-	+ void agregarMasClientesCuenta(CuentaBancaria c, Cliente e) 
-	+ CuentaBancaria buscarCuentasCliente(Cliente c)
-	+ void consultarSaldo(Cliente c, CuentaBancaria e) 
-}
+Cliente "*" --* "*" Banco : tiene
+Banco "*" *-- "*" CuentaBancaria : tiene
 
-@enduml
+Movimiento -- Banco
+@enduml	
+
+//www.plantuml.com/plantuml/png/fLNDRjiu43v7Jq4a5pjh0xlNTNQHLCeXG08KS5zWJ34g0LfqISfeuFhTIseueaJRAThu8dBupJS_tv2-jmwCwxQgu0giPP-WvPeTYglYQiaUZ86tPsdTNQcaQ9tudt5SMBQQ0DXTsNax17Sm4ZomtzkL9_eBMMVpVhtNicRG6D60YRIbRX_RlTIpk6TypYv0r_84EY3tWb1sXWG4ilhjqOgucydMKHrFLNBdHe31Cdg8apkDsyKGR1GhGYdKjFuGyHb6PBAUvnMzWALq8p3Zu8kX034_4sFJMKuP4zMuByUewOlUossm3iBcWIRRNjc11h-zxLbpK1LuwwlWNo7HeiXfFqkrrcAdhNHWKcABa_2R1Qjrjr62oUrE6oT6yellpW3dKhU_O7XL6jmP0gvRsoa7PWsgrk-G1ATZ4Nj6i4DHCFzRihKpicrOgxSR8rRHYCf6B1aFre6J_1XFrxBfaEk_V_uElrM0JLbhpRjjtydSlfLSAfdR-OuC6wsLW9O1TtAlLuoun-C_c-I-E0cwE0at_vZx8kM9J77hD2xmoj20s3xtuOR7GofCM0SF0H2dAZIr4Uwf9ZYgLi36Xa5n3FNBjFLpZqBUi2WB0f8MDxbkbdGxaUs6wf6rFvUlaaEjpGhFQ99jc3QodNb8dNIT0YCiOQOtu0KygettYI0uuWuiFFdJaIyrgv56LyBoRYE5oVsKPtFYmZ7IZWzJkVd5zt9qe9Xt9qZ-D0stJ5pG_vstSEGRkQaw9zf6upkUFNMKHQAawpxjAZ8UQ5QEwF2jauxmqrTa5VAC58rm2C6IgAOmYzMue9sI7Cn4FspEAUXBKfB6E4xlmsUVPX7mVfawaXWkvemyH5CbcYeNvJTuofHE-O5qoYhH_54wsQs--x5SXWPTi5VdxUK5V5aL1ULqVNlDbilR_XjWcltBd3yI1Uw2_TOxXMz6Hi0Y_HzwAcGfxaLRTrlr4m00
