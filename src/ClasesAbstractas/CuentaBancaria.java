@@ -1,20 +1,23 @@
 package ClasesAbstractas;
 import java.util.*;
 import Clases.*;
-
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public abstract class CuentaBancaria {
 	
 
     protected  int idCuenta;
     
-    protected static int idsiguiente=1;
+    protected static int idsiguiente=100000;
+    
+    protected String identificador;
 
-    protected float saldo;
+    protected double saldo;
 
     protected ArrayList<Cliente> titulares;
 
-    protected float importeMantenimiento;
+    protected double importeMantenimiento;
 
     protected float tasaInteres;
 
@@ -23,11 +26,9 @@ public abstract class CuentaBancaria {
     protected float limiteDescubierto;
 
     protected float tasaDescubierto;
-
-	public int getId; //implementar en las clases :/
     
+    protected LocalDate fechaActual ;
     
-
     public CuentaBancaria(Cliente e) {
 		
 		this.idCuenta = idsiguiente;
@@ -35,11 +36,12 @@ public abstract class CuentaBancaria {
 		this.saldo = 0;
 		this.titulares = new ArrayList<>();
 		this.titulares.add(e);
+		this.fechaActual = LocalDate.now();
 	}
     
         @Override
 	public String toString() {
-		return "CuentaBancaria [ID=" + idCuenta + ", titulares=" + titulares + "]";
+		return "CuentaBancaria [ID=" + identificador + ", titulares=" + titulares + "]";
 	}
 
 	public void agregarMasClientes(Cliente e) {
@@ -53,15 +55,34 @@ public abstract class CuentaBancaria {
     	
     }
     
-    public void agregarSaldo(float importe) {
+    public void agregarSaldo(double importe) {
     	
     	saldo=saldo+importe;
     }
+    
+    public abstract void quitarSaldo(float importe);
 
-	public float getSaldo() {
+	public double getSaldo() {
         // TODO implement here
-        return 0.0f;
+        return saldo;
     }
+	
+	public  String getID(){
+		
+		return identificador;
+	}
+	
+	public void aplicarMantenimientoCuenta() {
+		
+		saldo= (float) (saldo-importeMantenimiento);
+		fechaActual = LocalDate.now();
+	}
+	
+	public void aplicarTasaInteres() {
+		
+	saldo = saldo*tasaInteres;		    
+	    
+	}
 	
 	
 

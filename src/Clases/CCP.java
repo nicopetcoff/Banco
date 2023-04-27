@@ -7,7 +7,19 @@ public class CCP extends CuentaBancaria {
 
 	public CCP(Cliente e) {
 		super(e);
-		// TODO Auto-generated constructor stub
+		this.identificador = "CCP" +idCuenta;
+		this.importeMantenimiento = 15;
+		this.limiteDescubierto= -1000;
+	}
+
+	@Override
+	public void quitarSaldo(float importe) {
+		if ((saldo-importe)>limiteDescubierto) {
+			
+			saldo = saldo-importe;
+			
+		}
+		
 	}
 
 

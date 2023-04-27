@@ -8,10 +8,9 @@ import javax.swing.Spring;
  */
 public class Cliente {
 
-
     private String nombre;
     private int idCliente;
-    private static int idSiguiente =1;    
+    private static int idSiguiente =100000;    
     private String documento;
     private String domicilio;
     private String cp;
@@ -39,9 +38,6 @@ public class Cliente {
 		this.activo= true;
 	}
 	
-	
-
-	@Override
 	public String toString() {
 		return "Cliente [nombre=" + nombre + ", ID=" + idCliente + ", documento=" + documento + ", domicilio="
 				+ domicilio + "]";
@@ -57,8 +53,7 @@ public class Cliente {
 
 	public int getIdCliente() {
 		return idCliente;
-	}
-    
+	}    
 
 
 }

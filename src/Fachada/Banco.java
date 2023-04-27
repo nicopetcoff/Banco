@@ -19,7 +19,11 @@ public class Banco {
 		clientes.add(new Cliente("Pedro","42111111", "Quilmes"));
 	}
 	
-	public void agregarCliente(Cliente c) {
+	public void agregarClienteConEnvio(Cliente c) {
+		clientes.add(c);
+	}
+	
+	public void agregarClienteSinEnvio(Cliente c) {
 		clientes.add(c);
 	}
 	
@@ -71,7 +75,7 @@ public class Banco {
 	public CuentaBancaria soyLaCuenta(int id){
 		
 		for (int i = 0; i < cuentas.size() ; i++) {
-			if(cuentas.get(i).getId==id) {
+			if(cuentas.get(i).getID().equals(id)) {
 				return cuentas.get(i);
 			}
 		}
@@ -97,8 +101,4 @@ public class Banco {
 		
 	}
 
-	public void consultarSaldo(Cliente c, CuentaBancaria e) {
-		
-		System.out.println(e.getSaldo());
-	}
 }

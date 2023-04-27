@@ -1,4 +1,5 @@
 package Main;
+import java.nio.channels.ScatteringByteChannel;
 import java.util.*;
 
 import Clases.*;
@@ -12,6 +13,7 @@ public class main {
 		Scanner sc = new Scanner(System.in);
 		
 		Banco b= new Banco();
+		Movimiento m = new Movimiento();
 		
 		int opcion;
 		
@@ -19,7 +21,10 @@ public class main {
 			
 			System.out.println("Bienvenido al Banco, elija una opcion");
 			System.out.println("1.\t Crear Cuenta");
-			System.out.println("2.\t Agregar titular a cuenta");
+			System.out.println("2.\t Agregar titular a cuenta (SOLO CUENTAS CARGADAS)");
+			System.out.println("3.\t Agregar Cliente");
+			System.out.println("4.\t Consultar saldo de Cliente");
+			System.out.println("5.\t Depositar dinero en cuenta de Cliente");
 			
 			
 			opcion= sc.nextInt();
@@ -60,15 +65,71 @@ public class main {
 				int clienteID1 = sc.nextInt();
 				Cliente ce11 = b.soyEseCliente(clienteID1);
 				
-				b.agregarMasClientesCuenta(ce1, ce11);
+				b.agregarMasClientesCuenta(ce1, ce11);				
+				break;
 				
+			case 3:
+				System.err.println("Indique nombre:\t");
+				String nombrec = sc.next();
+				
+				System.out.println("Indique DNI:\t");
+				String dni = sc.next();
+				
+				System.out.println("Indique domicilio:\t");
+				String domic= sc.next();
+				
+				System.out.println("¿Envío digital?"
+						+ "\n S"
+						+ "\n N");
+				String tcp = sc.next();
+				
+				if (tcp.equals("S")) {
+					Cliente ce12 = new Cliente(nombrec, dni, domic);
+					b.agregarClienteSinEnvio(ce12);
+				} else if(tcp.equals("N")) {
+					System.out.println("Indique codigo postal:\t");
+					String cp = sc.next();
+					
+					Cliente ce13 = new Cliente(nombrec, dni, domic, cp);
+					b.agregarClienteConEnvio(ce13);
+
+				}				
+				break;
+				
+			case 4:
+				System.out.println("Elija Cliente por su ID");
+				System.out.println();
+				b.verClientes();
+				int clienteID11 = sc.nextInt();
+				Cliente ce111 = b.soyEseCliente(clienteID11);
+				
+				
+				CuentaBancaria c111 = b.buscarCuentasCliente(ce111);
+				
+				 m.consultarSaldo(ce111, c111);			
+				break;
+				
+			case 5:
+				System.out.println("Elija Cliente por su ID");
+				System.out.println();
+				b.verClientes();
+				int clienteID111 = sc.nextInt();
+				Cliente ce1111 = b.soyEseCliente(clienteID111);
+				
+				
+				CuentaBancaria c1111 = b.buscarCuentasCliente(ce1111);
+				
+				System.out.println("Ingrese importe");
+				double importe= sc.nextDouble();
+				
+				 m.depositar(ce1111, c1111, importe);	
 				break;
 				
 			default:
 				break;
 			}
 			
-		}while (opcion!=4);
+		}while (opcion!=6);
 		
 		sc.close();
 		
