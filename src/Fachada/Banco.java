@@ -8,11 +8,13 @@ public class Banco {
 	
 	private ArrayList<Cliente> clientes ;
 	private ArrayList <CuentaBancaria> cuentas;
+	private ArrayList<Movimiento> movimientos;
 	
 	public Banco() {
 		
 		this.clientes = new ArrayList<>();
 		this.cuentas = new ArrayList<>();
+		this.movimientos = new ArrayList<>();
 		
 		clientes.add(new Cliente("Nicolas","41577536", "Quilmes"));
 		clientes.add(new Cliente("Carlos","4111111", "Quilmes"));
@@ -99,6 +101,21 @@ public class Banco {
 		}
 		return null;
 		
+	}
+
+	public void guardarMovimiento(Cliente c, CuentaBancaria cb, String tipoMovimiento) {
+		movimientos.add(new Movimiento(c, cb, tipoMovimiento));
+		System.out.println("Lo guarda");
+		
+	}
+	
+	public void mostrarMovimientosDeClienteCuenta(Cliente c, CuentaBancaria cb){		
+		
+		for(Movimiento mov : movimientos) {
+			if(mov.getCliente().getIdCliente()==c.getIdCliente() && mov.getCuentaBancaria().getID() == cb.getID())
+				System.out.println(mov);	
+			
+		}			
 	}
 
 }

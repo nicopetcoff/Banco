@@ -2,7 +2,8 @@
 class Banco {
 	
 	- ArrayList<Cliente> clientes ;
-	- ArrayList <CuentaBancaria> cuentas;	
+	- ArrayList <CuentaBancaria> cuentas;
+        - ArrayList <Movimiento> movimientos;	
 	+ Banco()	
 	+ void agregarClienteConEnvio(Cliente c) 
 	+ void agregarClienteSinEnvio(Cliente c)
@@ -13,13 +14,18 @@ class Banco {
 	+ CuentaBancaria soyLaCuenta(int id)
 	+ void agregarMasClientesCuenta(CuentaBancaria c, Cliente e)
 	+ CuentaBancaria buscarCuentasCliente(Cliente c)
+        + void guardarMovimiento(Cliente c, CuentaBancaria cb, String tipoMovimiento)
+        + void mostrarMovimientosDeClienteCuenta(Cliente c, CuentaBancaria cb)
+
+
 }
 class Movimiento {
 	
 	- CuentaBancaria cuentaBancaria;
 	- Cliente cliente;
+        - Banco b;
 	- LocalDate fechaMovimiento;	
-	+ Movimiento()
+	+ Movimiento(Banco b)
 	+ void depositar(Cliente c, CuentaBancaria cb, double importe) 
 	+ void extraccion(Cliente c, CuentaBancaria cb, float importe) 
 	+ void consultarSaldo(Cliente c, CuentaBancaria e) 
@@ -105,6 +111,5 @@ Cliente "*" --* "*" Banco : tiene
 Banco "*" *-- "*" CuentaBancaria : tiene
 
 Movimiento -- Banco
-@enduml	
-
+@enduml
 //www.plantuml.com/plantuml/png/fLNDRjiu43v7Jq4a5pjh0xlNTNQHLCeXG08KS5zWJ34g0LfqISfeuFhTIseueaJRAThu8dBupJS_tv2-jmwCwxQgu0giPP-WvPeTYglYQiaUZ86tPsdTNQcaQ9tudt5SMBQQ0DXTsNax17Sm4ZomtzkL9_eBMMVpVhtNicRG6D60YRIbRX_RlTIpk6TypYv0r_84EY3tWb1sXWG4ilhjqOgucydMKHrFLNBdHe31Cdg8apkDsyKGR1GhGYdKjFuGyHb6PBAUvnMzWALq8p3Zu8kX034_4sFJMKuP4zMuByUewOlUossm3iBcWIRRNjc11h-zxLbpK1LuwwlWNo7HeiXfFqkrrcAdhNHWKcABa_2R1Qjrjr62oUrE6oT6yellpW3dKhU_O7XL6jmP0gvRsoa7PWsgrk-G1ATZ4Nj6i4DHCFzRihKpicrOgxSR8rRHYCf6B1aFre6J_1XFrxBfaEk_V_uElrM0JLbhpRjjtydSlfLSAfdR-OuC6wsLW9O1TtAlLuoun-C_c-I-E0cwE0at_vZx8kM9J77hD2xmoj20s3xtuOR7GofCM0SF0H2dAZIr4Uwf9ZYgLi36Xa5n3FNBjFLpZqBUi2WB0f8MDxbkbdGxaUs6wf6rFvUlaaEjpGhFQ99jc3QodNb8dNIT0YCiOQOtu0KygettYI0uuWuiFFdJaIyrgv56LyBoRYE5oVsKPtFYmZ7IZWzJkVd5zt9qe9Xt9qZ-D0stJ5pG_vstSEGRkQaw9zf6upkUFNMKHQAawpxjAZ8UQ5QEwF2jauxmqrTa5VAC58rm2C6IgAOmYzMue9sI7Cn4FspEAUXBKfB6E4xlmsUVPX7mVfawaXWkvemyH5CbcYeNvJTuofHE-O5qoYhH_54wsQs--x5SXWPTi5VdxUK5V5aL1ULqVNlDbilR_XjWcltBd3yI1Uw2_TOxXMz6Hi0Y_HzwAcGfxaLRTrlr4m00

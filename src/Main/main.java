@@ -13,7 +13,7 @@ public class main {
 		Scanner sc = new Scanner(System.in);
 		
 		Banco b= new Banco();
-		Movimiento m = new Movimiento();
+		Movimiento m = new Movimiento(b);
 		
 		int opcion;
 		
@@ -25,6 +25,7 @@ public class main {
 			System.out.println("3.\t Agregar Cliente");
 			System.out.println("4.\t Consultar saldo de Cliente");
 			System.out.println("5.\t Depositar dinero en cuenta de Cliente");
+			System.out.println("6.\t Listar movimientos de una Cuenta de un Cliente");
 			
 			
 			opcion= sc.nextInt();
@@ -122,14 +123,28 @@ public class main {
 				System.out.println("Ingrese importe");
 				double importe= sc.nextDouble();
 				
-				 m.depositar(ce1111, c1111, importe);	
+				 m.depositar(ce1111, c1111, importe);				 
+				break;
+				
+			case 6:
+				System.out.println("Elija Cliente por su ID");
+				System.out.println();
+				b.verClientes();
+				int clienteID1111 = sc.nextInt();
+				Cliente ce11111 = b.soyEseCliente(clienteID1111);
+				
+				
+				CuentaBancaria c11111 = b.buscarCuentasCliente(ce11111);
+				b.mostrarMovimientosDeClienteCuenta(ce11111, c11111);
+				
+							
 				break;
 				
 			default:
 				break;
 			}
 			
-		}while (opcion!=6);
+		}while (opcion!=7);
 		
 		sc.close();
 		
